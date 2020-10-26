@@ -13,13 +13,9 @@
           <option value="" disabled>Choose Category</option>
           {% for category in categories %} {% if category.category_name ==
           task.category_name %}
-          <option value="{{category.category_name}}">
-          {{category.category_name}}
-          </option>
+          <option value="{{category.category_name}}">{{category.category_name}}</option>
           {% else %}
-          <option value="{{category.category_name}}">
-          {{category.category_name}}
-          </option>
+          <option value="{{category.category_name}}">{{category.category_name}}</option>
           {% endif %} {% endfor %}
         </select>
         <label>Task Category</label>
@@ -54,7 +50,7 @@
     <div class="row">
       <div class="input-field col s12">
         <i class="material-icons prefix">today</i>
-        <input id="due_date" name="due_date" type="text" value="{{ task.due_date }}" class="datepicker" />
+        <input id="due_date" name="due_date" type="text" value="{{task.due_date}}" class="datepicker" />
         <label for="due_date">Task Name</label>
       </div>
     </div>
