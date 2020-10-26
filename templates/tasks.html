@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block content %}
+<ul class="collapsible">
+  {% for task in tasks %}
+  <li>
+    <div class="collapsible-header">
+      <div class="row">
+        <div class="col s4">
+          <i class="material-icons">expand_more</i>
+          <a href="{{url_for('delete_task', task_id=task._id)}}" class="waves-effect waves-light btn btn-small">Done</a>
+          <a href="{{url_for('edit_task', task_id=task._id)}}" class="waves-effect waves-light btn btn-small blue">Edit</a>
+        </div>
+        <div class="task-header col s8">
+          <strong>{{task.task_name}}</strong> - {{task.due_date}}
+        </div>
+      </div>
+    </div>
+    <div class="collapsible-body"><span>{{task.task_description}}</span></div>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
