@@ -16,13 +16,14 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/tasks")
 def tasks():
-    return render_template("tasks.html", tasks=mongo.db.tasks.find())
+    tasks = list(mongo.db.tasks.find())
+    return render_template("tasks.html", tasks=tasks)
 
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
     query = request.form.get("query")
-    tasks = list(mongo.db.tasks.find({"$text": {"$search": query}}))
+    tasks = list(mongo.db.tasks.find(({"$text": {"$search": query}})))
     return render_template("tasks.html", tasks=tasks)
 
 
@@ -83,8 +84,7 @@ def login():
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
     # grab the session user's username from db
-    username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
+    username = session["user"]
 
     if session["user"]:
         return render_template("profile.html", username=username)
@@ -108,7 +108,14 @@ def new_task():
 @app.route("/insert_task", methods=["POST"])
 def insert_task():
     tasks = mongo.db.tasks
-    tasks.insert_one(request.form.to_dict())
+    tasks.insert_one(
+        {"task_name": request.form.get("task_name"),
+         "category_name": request.form.get("category_name"),
+         "task_description": request.form.get("task_description"),
+         "due_date": request.form.get("due_date"),
+         "is_urgent": request.form.get("is_urgent"),
+         "created_by": session["user"]
+         })
     return redirect(url_for("tasks"))
 
 
@@ -127,7 +134,8 @@ def update_task(task_id):
                   "category_name": request.form.get("category_name"),
                   "task_description": request.form.get("task_description"),
                   "due_date": request.form.get("due_date"),
-                  "is_urgent": request.form.get("is_urgent")
+                  "is_urgent": request.form.get("is_urgent"),
+                  "created_by": session["user"]
                   })
     return redirect(url_for("tasks"))
 

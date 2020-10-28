@@ -9,7 +9,7 @@
     <div class="row">
       <div class="input-field col s12">
         <i class="material-icons prefix">poll</i>
-        <select id="category" name="category">
+        <select id="category" name="category_name">
           <option value="" disabled>Choose Category</option>
           {% for category in categories %} {% if category.category_name ==
           task.category_name %}
@@ -51,7 +51,7 @@
       <div class="input-field col s12">
         <i class="material-icons prefix">today</i>
         <input id="due_date" name="due_date" type="text" value="{{task.due_date}}" class="datepicker" />
-        <label for="due_date">Task Name</label>
+        <label for="due_date">Date Due</label>
       </div>
     </div>
     <div class="row">

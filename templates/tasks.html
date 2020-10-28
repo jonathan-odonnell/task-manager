@@ -16,9 +16,7 @@
         <label for="query">Search Tasks</label>
       </div>
       <div class="col s12 m4">
-        <a href="{{ url_for('get_tasks') }}" class="red btn text-shadow"
-          >Reset</a
-        >
+        <a href="{{ url_for('tasks') }}" class="red btn text-shadow">Reset</a>
         <button type="submit" class="light-blue darken-1 btn text-shadow">
           <i class="fas fa-search left"></i> Search
         </button>
@@ -32,6 +30,7 @@
   <li>
     <div class="collapsible-header">
       <div class="row">
+        {% if session.user|lower == task.created_by|lower %}
         <div class="col s4">
           <i class="material-icons">expand_more</i>
           <div class="buttons">
@@ -52,9 +51,23 @@
         <div class="task-header col s8">
           <strong>{{task.task_name}}</strong> - {{task.due_date}}
         </div>
+        {% else %}
+        <div class="task-header col">
+          <i class="material-icons">expand_more</i>
+          <strong>{{task.task_name}}</strong> - {{task.due_date}}
+        </div>
+        {% endif %}
       </div>
     </div>
-    <div class="collapsible-body"><span>{{task.task_description}}</span></div>
+    <div class="collapsible-body">
+      <p>
+        <strong>Description: </strong>{{ task.task_description.capitalize() }}
+      </p>
+      <p><strong>Category: </strong>{{ task.category_name }}</p>
+      <p>
+        <em><strong>Added by: </strong> {{ task.created_by.capitalize() }}</em>
+      </p>
+    </div>
   </li>
   {% endfor %}
 </ul>
