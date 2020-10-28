@@ -9,13 +9,6 @@
     action="{{ url_for('register') }}"
   >
     <div class="card-panel">
-      {% with messages = get_flashed_messages() %} {% if messages %}
-      <ul class="flashes">
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %} {% endwith %}
       <!-- username -->
       <div class="row">
         <div class="input-field col s12">
